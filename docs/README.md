@@ -56,7 +56,7 @@ Returns information about all available currencies.
 
 **HTTP Request**
 
-`GET https://jewex.io/api/v1/currencies/`
+`GET https://jewex.io/api/v1/assets/`
 
 <!-- tabs:start -->
 
@@ -65,7 +65,7 @@ Returns information about all available currencies.
 ```js
 var request = require('request');
 
-request.get('https://jewex.io/api/v1/currencies/', function (error, response, body) {
+request.get('https://jewex.io/api/v1/assets/', function (error, response, body) {
     // process response    
 });
 ```
@@ -113,8 +113,8 @@ request.get('https://jewex.io/api/v1/pairs/', function (error, response, body) {
 ```json
 [
   {
-    "from": "BTC",
-    "to": "USD",
+    "fromSymbol": "BTC",
+    "toSymbol": "USD",
     "name": "BTC_USD",
     "maximumAmount": 100000000.00000000,
     "minimumAmount": 0.00000001,
@@ -214,9 +214,9 @@ Get full orderbook of active orders
 
 | Parameter | Default | Required | Description |
 | --------- | ------- | -------- | ----------- |
-| limit_sell | null | No | Sell orders limit |
-| limit_buy | null | No | Buy orders limit |
-| group | 0 | No | If set 1, then order will grouped by price |
+| limitSell | null | No | Sell orders limit |
+| limitBuy | null | No | Buy orders limit |
+| group | 1 | No | If set 1, then order will grouped by price |
 
 <!-- div:right-panel -->
 
@@ -230,8 +230,8 @@ var request = require('request');
 var url = 'https://jewex.io/api/v1/orderbook/BTC_USD/';
 
 var params = {
-  limit_sell: 1,
-  limit_buy: 1
+  limitSell: 1,
+  limitBuy: 1
 };
 
 request.get({url: url, qs: params}, function (error, response, body) {
@@ -244,18 +244,18 @@ request.get({url: url, qs: params}, function (error, response, body) {
 
 ```json
 {
-  "sell": [
+  "asks": [
     {
       "price": 911.519,
-      "id": 12345,
+      "_id": 12345,
       "amount": 0.000446,
       "timestamp": 1485777324.410015
      }
    ],
-  "buy": [
+  "bids": [
     {
       "price": 911.122,
-      "id": 12345,
+      "_id": 12345,
       "amount": 0.001233,
       "timestamp": 1485777124.415542
     }
@@ -306,7 +306,7 @@ List all orders created in your account. Can be filtered by query parameters.
 | Parameter | Default | Description |
 | --------- | ------- | ----------- |
 | side | null | Filter by orders side (sell or buy) |
-| pair | null | Filter by pair |
+| market | null | Filter by pair |
 | status | null | Filter by status |
 | limit | 1000 | Limiting results |
 
@@ -336,11 +336,12 @@ request.get(
 [
   {
     "amount": 0.500000000,
-    "pair": "ETH_USD",
+    "actualAmount": 0.500000000,
+    "market": "ETH_USD",
     "side": "buy",
     "status": "active",
     "price": 0.00113000,
-    "id": 11249
+    "_id": 11249
   }
 ]
 ```
@@ -383,11 +384,12 @@ request.get(
 ```json
 {
   "amount": 0.1250000,
-  "pair": "BTC_USD",
+  "actualAmount": 0.1250000,
+  "market": "BTC_USD",
   "side": "buy",
   "status": "active",
   "price": 870.69000000,
-  "id": 12345
+  "_id": 12345
 }
 ```
 
@@ -430,7 +432,7 @@ var request = require('request');
 
 var order = {
     side: 'buy',
-    pair: 'BTC_USD',
+    market: 'BTC_USD',
     amount: '1.0',
     price: '870.69'    
 };
@@ -451,9 +453,10 @@ request.post({
 ```json
 {
   "success": true,
+  "_id": 11268,
   "side": "buy",
+  "market": "BTC_USD",
   "date": 1483721079.51632,
-  "id": 11268,
   "price": 870.69000000,
   "amount": 0.00000000,
   "trades": [
@@ -462,7 +465,7 @@ request.post({
       "price": 870.69000000,
       "orderId": 11266,
       "amount": 0.00010000,
-      "id": 6049
+      "_id": 6049
     }
   ]
 }
@@ -520,7 +523,7 @@ request.post({
 
 ```json
 {
-  "id": 123456,
+  "_id": 123456,
 }
 ```
 
@@ -575,9 +578,9 @@ request.get(
 {
   "trades": [
     {
-      "id": 6030,
+      "_id": 6030,
       "price": 839.36000000,
-      "pair": "BTC_USD",
+      "market": "BTC_USD",
       "side": "sell",
       "timestamp": 1483705817.735508,
       "amount": 0.00281167
@@ -643,9 +646,9 @@ request.get(
 {
   "trades": [
     {
-      "id": 6030,
+      "_id": 6030,
       "price": 839.36000000,
-      "pair": "BTC_USD",
+      "market": "BTC_USD",
       "side": "sell",
       "timestamp": 1483705817.735508,
       "amount": 0.00281167
@@ -702,7 +705,7 @@ request.get(
 [
   {
     "timestamp": 1485363039.18359,
-    "id": 317,
+    "_id": 317,
     "currency": "BTC",
     "amount": 10.00000000
   }
@@ -773,7 +776,7 @@ request.get(
 ```json
 [
   {
-    "id": 403,
+    "_id": 403,
     "timestamp": 1485363466.868539,
     "currency": "BTC",
     "amount": 0.53000000,
