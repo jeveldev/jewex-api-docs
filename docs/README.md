@@ -48,6 +48,29 @@ All request to these methods must contain the following headers:
 * **X-SIGNATURE** - query’s POST data, sorted by keys and signed by your key’s **“secret”** according to the HMAC-SHA256 method.
 * **X-NONCE** - integer value, must be greater then nonce in previous api call.
 
+<!-- tabs:start -->
+
+#### ** Node.js **
+
+```js
+var crypto = require('crypto')
+var _ = require('underscore')
+
+var createSignature = function (options, secret) {
+  options = _.omit(options, ['__proto__'])
+  payload = Object
+  .keys(options) // get keys of payload object
+  .sort() // sort keys
+  .map((key) => key + "=" + encodeURIComponent(options[key])) // each value should be url encoded. the most sensitive part for sign checking
+  .join('&'); // to sting, separate with ampersand
+  hmac = crypto.createHmac('sha256', secret)
+  hmac.update(payload)
+  hmac.digest('hex')
+}
+```
+
+<!-- tabs:end -->
+
 # Currencies
 
 ## List all currencies
@@ -308,6 +331,7 @@ List all orders created in your account. Can be filtered by query parameters.
 | side | null | Filter by orders side (sell or buy) |
 | market | null | Filter by pair |
 | status | null | Filter by status |
+| page | 1 | Filter by status |
 | limit | 1000 | Limiting results |
 
 <!-- div:right-panel -->
