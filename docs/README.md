@@ -12,7 +12,7 @@ Service provides open API for trading operations and broadcasting of all trading
 
 All you need to start receiving live information about orderbook is connect to **wss://jewex.io** and subscribe to necessary channel.
 
-There are channel names have pattern **book_{pair_name}** where **{pair_name}** is any pair available in service. For example **book_BTC_USD** or **book_BTC_ETH**.
+There are channel names have pattern **book_{market_name}** where **{market_name}** is any pair available in service. For example **book_BTC_USD** or **book_BTC_ETH**.
 
 > Example json event payload data.
 
@@ -231,7 +231,7 @@ Get full orderbook of active orders
 
 **HTTP Request**
 
-`GET https://jewex.io/api/v1/orderbook/<pair_name>/`
+`GET https://jewex.io/api/v1/orderbook/<market>/`
 
 **Query parameters**
 
@@ -441,7 +441,7 @@ Create new order that will be automatically executed.
 | Parameter | Description |
 | --------- | ----------- |
 | side | Side of order (sell or buy) |
-| pair | Pair of order |
+| market | Pair of order |
 | amount | Amount of first currency of pair |
 | price | Price of order. This param have limited precision (See pairs) |
 
@@ -573,7 +573,7 @@ List all orders created in your account. Can be filtered by query parameters.
 
 | Parameter | Default | Description |
 | --------- | ------- | ----------- |
-| pair | null | Filter by pair |
+| market | null | Filter by pair |
 | from | null | From date |
 | to | null | To date |
 | page | null | Result page |
@@ -638,7 +638,7 @@ List only own exchanges where your account was buyer or seller.
 | Parameter | Default | Description |
 | --------- | ------- | ----------- |
 | side | null | Filter by orders side (sell or buy) |
-| pair | null | Filter by pair |
+| market | null | Filter by pair |
 | from | null | From date |
 | to | null | To date |
 | page | null | Result page |
@@ -836,7 +836,7 @@ Get price history candlestick data
 
 **HTTP Request**
 
-`GET https://jewex.io/api/v1/history/candles/<pair>/<interval>/`
+`GET https://jewex.io/api/v1/history/candles/<market>/<interval>/`
 
 **Query parameters**
 
