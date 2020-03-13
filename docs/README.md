@@ -114,8 +114,8 @@ Returns information about all available pairs.
 
 | Parameter | Required | Description |
 | --------- | ------- | ----------- |
-| from | No | Base currency in market pair |
-| to | No | Quote currency in market pair |
+| fromSymbol | No | Base currency in market pair |
+| toSymbol | No | Quote currency in market pair |
 
 <!-- div:right-panel -->
 
@@ -267,18 +267,18 @@ request.get({url: url, qs: params}, function (error, response, body) {
 
 ```json
 {
-  "asks": [
+  "sell": [
     {
-      "price": 911.519,
       "_id": 12345,
+      "price": 911.519,
       "amount": 0.000446,
       "timestamp": 1485777324.410015
      }
    ],
-  "bids": [
+  "buy": [
     {
-      "price": 911.122,
       "_id": 12345,
+      "price": 911.122,
       "amount": 0.001233,
       "timestamp": 1485777124.415542
     }
@@ -359,13 +359,14 @@ request.get(
 ```json
 [
   {
+    "_id": 11249,
+    "market": "ETH_USD",
     "amount": 0.500000000,
     "actualAmount": 0.500000000,
-    "market": "ETH_USD",
     "side": "buy",
     "status": "active",
     "price": 0.00113000,
-    "_id": 11249
+    "timestamp": 1584067830130
   }
 ]
 ```
@@ -407,13 +408,14 @@ request.get(
 
 ```json
 {
+  "_id": 12345,
   "amount": 0.1250000,
   "actualAmount": 0.1250000,
   "market": "BTC_USD",
   "side": "buy",
   "status": "active",
   "price": 870.69000000,
-  "_id": 12345
+  "timestamp": 1584067830130
 }
 ```
 
@@ -483,6 +485,7 @@ request.post({
   "date": 1483721079.51632,
   "price": 870.69000000,
   "amount": 0.00000000,
+  "timestamp": 1584067830130,
   "trades": [
     {
       "side": "sell",
@@ -574,8 +577,8 @@ List all orders created in your account. Can be filtered by query parameters.
 | Parameter | Default | Description |
 | --------- | ------- | ----------- |
 | market | null | Filter by pair |
-| from | null | From date |
-| to | null | To date |
+| fromDate | null | From date |
+| toDate | null | To date |
 | page | null | Result page |
 | limit | 100 | Limiting results (max 1000) |
 
@@ -639,8 +642,8 @@ List only own exchanges where your account was buyer or seller.
 | --------- | ------- | ----------- |
 | side | null | Filter by orders side (sell or buy) |
 | market | null | Filter by pair |
-| from | null | From date |
-| to | null | To date |
+| fromDate | null | From date |
+| toDate | null | To date |
 | page | null | Result page |
 | limit | 100 | Limiting results (max 1000) |
 
@@ -843,8 +846,8 @@ Get price history candlestick data
 | Parameter | Default | Description |
 | --------- | ------- | ----------- |
 | limit | 720 | Limiting results |
-| from | null | Date from |
-| to | null | Date to |
+| fromTime | null | Date from |
+| toTime | null | Date to |
 
 <!-- div:right-panel -->
 
